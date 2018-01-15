@@ -1,6 +1,6 @@
 'use strict';
-//load local variables
-require('dotenv').config();
+
+require('dotenv').config();//load local variables
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -35,8 +35,6 @@ app.set('env', 'development');
 app.locals.paypal = config.paypal;
 app.locals.locale = config.locale;
 
-
-
 app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -52,7 +50,6 @@ app.use(session({
 }));
 
 var router = express.Router();
-
 
 router.route('/')
     .get(productController.renderProducts);
