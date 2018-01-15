@@ -1,6 +1,25 @@
 const Product = require('../models/product');
 const securityController = require('../controllers/security');
 
+//render '/' with products data
+exports.renderProducts = function(req, res) {
+    Product.find({price: {'$gt': 0}}).sort({price: -1}).limit(6).then(products => {
+          let format = new Intl.NumberFormat(req.app.locals.locale.lang, {style: 'currency', currency: req.app.locals.locale.currency });
+          products.forEach( (product) => {
+             product.formattedPrice = format.format(product.price);
+          });
+          res.render('index', {
+              pageTitle: 'Node.js Shopping Cart',
+              products: products,
+              nonce: securityController.md5(req.sessionID + req.headers['user-agent'])
+          });
+
+      }).catch(err => {
+          res.status(400).send('Bad request');
+    });
+};
+
+
 
 // Create endpoint /api/products for POST
 exports.postProduct = function(req, res) {
@@ -25,15 +44,13 @@ exports.postProduct = function(req, res) {
     });
 };
 
-
 exports.getProducts = function(req, res) {
     Product.find({price: {'$gt': 0}}).sort({price: -1}).limit(6).then(products => {
           let format = new Intl.NumberFormat(req.app.locals.locale.lang, {style: 'currency', currency: req.app.locals.locale.currency });
           products.forEach( (product) => {
              product.formattedPrice = format.format(product.price);
           });
-          res.render('index', {
-              pageTitle: 'Node.js Shopping Cart',
+          res.json({
               products: products,
               nonce: securityController.md5(req.sessionID + req.headers['user-agent'])
           });

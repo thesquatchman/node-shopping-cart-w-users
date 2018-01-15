@@ -16,6 +16,8 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URL);
 
 const productController = require('./controllers/product');
+const cartController = require('./controllers/cart');
+const checkoutController = require('./controllers/checkout');
 const securityController = require('./controllers/security');
 
 
@@ -53,13 +55,28 @@ var router = express.Router();
 
 
 router.route('/')
-    .get(productController.getProducts);
+    .get(productController.renderProducts);
 
 router.route('/api/products')
     .post(productController.postProduct)
     .get(productController.getProducts);
 
+router.route('/cart')
+    .post(cartController.postCart)
+    .get(cartController.renderCart);
 
+router.route('/cart/update')
+    .post(cartController.updateCart)
+
+router.route('/cart/remove/:id/:nonce')
+    .get(cartController.removeItem);   
+
+router.route('/cart/empty/:nonce')
+    .get(cartController.emptyCart); 
+
+router.route('/checkout')
+    .post(checkoutController.postCheckout)
+    .get(checkoutController.renderCheckout);
 
 // Register all our routes with /api
 app.use(router);
