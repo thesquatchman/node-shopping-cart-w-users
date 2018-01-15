@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URL);
 const productController = require('./controllers/product');
 const cartController = require('./controllers/cart');
 const checkoutController = require('./controllers/checkout');
+const userController = require('./controllers/user');
 const securityController = require('./controllers/security');
 
 
@@ -74,6 +75,14 @@ router.route('/cart/empty/:nonce')
 router.route('/checkout')
     .post(checkoutController.postCheckout)
     .get(checkoutController.renderCheckout);
+
+router.route('/login')
+    .post(userController.postLogin)
+    .get(userController.renderLogin);    
+
+router.route('/register')
+    .post(userController.createUser)
+    .get(userController.renderRegistration);        
 
 // Register all our routes with /api
 app.use(router);
