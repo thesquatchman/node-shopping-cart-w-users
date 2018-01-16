@@ -10,6 +10,15 @@ exports.renderLogin = function(req, res) {
   });
 };
 
+exports.userLogout = function(req, res) {
+  req.session.user = false;
+  res.render('login', {
+      pageTitle: 'Login',
+      user: false,
+      nonce: securityController.md5(req.sessionID + req.headers['user-agent'])
+  });
+};
+
 exports.postLogin = function(req, res) {
   const email = req.body.email;
   const password = req.body.password;

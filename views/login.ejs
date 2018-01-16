@@ -15,20 +15,20 @@
     
     
     <div class="row">
-        <div class="col-md-10 col-md-offset-2">
-
-            <div class="pull-right">
-                <input type="submit" value="Login" class="btn btn-primary btn-lg">
-            </div>
+        <div class="col-md-6 col-md-offset-2">
+            
             <div class="pull-left">
-                <a href="/register" class="btn btn-primary btn-lg">Create Account</a>
+                <input type="submit" value="Login" class="btn btn-primary">&nbsp;Or&nbsp;
+                <a href="/register" class="btn btn-default">Create Account</a>
             </div>
+            
+            
         </div>
         <input type="hidden" name="nonce" value="<%= nonce%>">
     </div>
 </form>
 <% } else { %>
-<p class="alert alert-info">Welcome <%= user.displayName %></p>
+<p class="alert alert-info">Welcome <%= user.displayName %>, not <%= user.displayName %>? <a href="/logout">Log Out</a></p>
 <% } %>
 
 

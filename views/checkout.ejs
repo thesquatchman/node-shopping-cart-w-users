@@ -1,6 +1,6 @@
 <% include header %>
 
-<% if(!checkoutDone) {%>
+<% if(!order) {%>
 <% if(cart && cart.items.length > 0) { %>
 <form action="/checkout" method="post" class="form-horizontal">
     <div class="form-group">
@@ -54,6 +54,7 @@
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
+
             <div class="pull-left">
                 <img src="/public/images/paypal.jpg" alt="">
             </div>
@@ -64,11 +65,14 @@
         <input type="hidden" name="nonce" value="<%= nonce%>">
     </div>
 </form>
+
 <% } else { %>
 <p class="alert alert-info">Sorry, no products in your cart.</p>
 <% } %>
 <% } else { %>
-<% include paypal-form %>
+    <h1>Thank You!</h1>
+    <p>Order Confirmation number: <%= order._id %></p>
+
 <% } %>
 
 <% include footer %>

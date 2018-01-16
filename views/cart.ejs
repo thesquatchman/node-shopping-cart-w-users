@@ -13,14 +13,14 @@
                         </a>
                     </td>
                     <td class="product-thumb">
-                        <img src="/public/images/products/<%= product.image %>" alt="" class="img-thumbnail img-responsive">
+                        <img style="width: 50px;" src="<%= product.image %>" alt="" class="img-thumbnail img-responsive">
                     </td>
                     <td><%= product.title %></td>
                     <td>
                         <%= product.formattedPrice %>
                     </td>
                     <td>
-                        <input type="text" class="qty" name="qty[]" value="<%= product.qty %>">
+                        <input type="number" class="qty" name="qty[]" value="<%= product.qty %>">
                         <input type="hidden" name="product_id[]" value="<%= product.id%>">
                         <input type="hidden" name="nonce" value="<%= nonce %>">
                     </td>

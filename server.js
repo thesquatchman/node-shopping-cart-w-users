@@ -78,7 +78,10 @@ router.route('/checkout')
 
 router.route('/login')
     .post(userController.postLogin)
-    .get(userController.renderLogin);    
+    .get(userController.renderLogin);
+
+router.route('/logout')
+    .get(userController.userLogout);        
 
 router.route('/register')
     .post(userController.createUser)
