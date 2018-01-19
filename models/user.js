@@ -17,6 +17,10 @@ var UserSchema = new mongoose.Schema({
     displayName: {
         type: String,
         default: '',
+    },
+    admin: {
+        type: Boolean,
+        default: false
     }
 });
 

@@ -16,6 +16,7 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URL);
 
 const productController = require('./controllers/product');
+const orderController = require('./controllers/order');
 const cartController = require('./controllers/cart');
 const checkoutController = require('./controllers/checkout');
 const userController = require('./controllers/user');
@@ -32,6 +33,7 @@ app.disable('x-powered-by');
 
 app.set('view engine', 'ejs');
 app.set('env', 'development');
+app.locals.superSecret = config.secret;
 
 app.locals.paypal = config.paypal;
 app.locals.locale = config.locale;
@@ -50,14 +52,18 @@ app.use(session({
     name: config.name
 }));
 
+
+// get an instance of the router for public routes
 var router = express.Router();
+// get an instance of the router for api routes
+var apiRoutes = express.Router(); 
+// route middleware to verify a token
+apiRoutes.use(securityController.authenticateToken);
+// apply the routes to our application with the prefix /api
+app.use('/api', apiRoutes); 
 
 router.route('/')
-    .get(productController.renderProducts);
-
-router.route('/api/products')
-    .post(productController.postProduct)
-    .get(productController.getProducts);
+    .get(productController.renderProducts);      
 
 router.route('/cart')
     .post(cartController.postCart)
@@ -85,9 +91,28 @@ router.route('/logout')
 
 router.route('/register')
     .post(userController.createUser)
-    .get(userController.renderRegistration);        
+    .get(userController.renderRegistration);    
 
-// Register all our routes with /api
+// route to authenticate a user 
+router.route('/authenticate')
+    .post(securityController.postAuthenticate);   
+
+router.route('/api/products')
+    .post(productController.postProduct)
+    .get(productController.getProducts);
+
+router.route('/api/orders')
+    .get(orderController.getOrders);
+
+router.route('/api/orders/:order_id')    
+    .put(orderController.updateOrder); 
+
 app.use(router);
+
+
+
+
+
+
 
 app.listen(port, console.log('listening on port '+port));

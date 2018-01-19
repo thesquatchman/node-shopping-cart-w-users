@@ -19,20 +19,19 @@ var OrderSchema = new mongoose.Schema({
     lastname: {
         type: String
     },
-    address: {
-        type: String
+    billing: {
+        address: String,
+        address2: String,
+        city: String,
+        state: String,
+        zip: String
     },
-    address2: {
-        type: String
-    },
-    city: {
-        type: String
-    },
-    state: {
-        type: String
-    },
-    zip: {
-        type: String
+    shipping: {
+        address: String,
+        address2: String,
+        city: String,
+        state: String,
+        zip: String
     },
     items: {
         type: Array
@@ -43,9 +42,12 @@ var OrderSchema = new mongoose.Schema({
     status: {
         type: String,
         default: 'pending'
+    },
+    tracking: {
+        type: String
     }
 
-});
+}, {timestamps: true});
 
 
 

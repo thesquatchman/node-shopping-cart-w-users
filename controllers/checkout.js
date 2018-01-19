@@ -25,12 +25,22 @@ exports.postCheckout = function (req, res) {
             order.firstname = req.body.firstname;
             order.lastname = req.body.lastname;
             order.email = req.body.email;
-            order.address = req.body.address;
-            order.city = req.body.city;
-            order.state = req.body.state;
-            order.zip = req.body.zip;
             order.items = cart.items;
             order.totals = cart.totals;
+            order.billing = {
+                address: req.body.address,
+                address2: req.body.address2,
+                city: req.body.city,
+                state: req.body.state,
+                zip: req.body.zip
+            };
+            order.shipping = {
+                address: req.body.address,
+                address2: req.body.address2,
+                city: req.body.city,
+                state: req.body.state,
+                zip: req.body.zip
+            };
             
             order.save(function(err) {
 
