@@ -18,7 +18,7 @@ exports.isValidNonce = function(value, req) {
 
 exports.postAuthenticate = function(req, res) {
 	User.findOne({
-    email: req.body.email
+    email: req.body.email.toLowerCase()
   }, function(err, user) {
   	if (err) throw err;
 
