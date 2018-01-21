@@ -20,7 +20,7 @@ exports.userLogout = function(req, res) {
 };
 
 exports.postLogin = function(req, res) {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const password = req.body.password;
   User.findOne({ email: email }, function (err, user) {
       if (err) { return callback(err); }
@@ -65,7 +65,7 @@ exports.createUser = function(req, res) {
     var user = new User();
 
     // Set the product properties that came from the POST data
-    user.email = req.body.email ;
+    user.email = req.body.email.toLowerCase();
     user.password = req.body.password;
     user.displayName = req.body.displayName;
     
